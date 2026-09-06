@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<title>新規登録</title>
+</head>
+
+<body>
+	<header th:replace="~{header :: common_header}"></header>
+	<div class="container">
+		<h2 class="text-start">口コミ投稿画面</h2>
+		<form th:action="@{/user/reviewRegister}" method="post" enctype="multipart/form-data">
+			<div>
+				<div>ユーザー名（任意）</div>
+				<input name="userName" class="w-100 form-control" type="text" required>
+			</div>
+			<div>
+				<span>評価</span>
+				<select name="rating" class="d-inline-block w-25 mt-1 form-control">
+					<option>1</option>
+				</select>
+			</div>
+			<div>
+				<div>メールアドレス</div>
+				<input name="email" class="w-100 form-control" type="text" required>
+			</div>
+			<div>
+				<div>コメント</div>
+				<input name="comment" class="w-100 form-control" type="textarea" required>
+			</div>
+			<div class="mt-1">
+				<input name="reviewImgPath" class="form-control" type="file" required>
+			</div>
+			<input name="productId" th:value="${productId}" type="hidden">
+			<div class="text-center">
+				<input class="btn btn-primary px-3 review-register-btn mt-1" type="submit" value="投稿">
+			</div>
+		</form>
+	</div>
+	
+	<footer th:replace="~{footer :: common_footer}"></footer>
+</body>
+</html>

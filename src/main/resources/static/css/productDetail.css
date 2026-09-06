@@ -1,0 +1,20 @@
+@charset "UTF-8";
+.product-image {
+	width: 450px !important;
+	    max-width: none !important; /* 親要素の幅制限を解除 */
+	    height: 300px !important;
+	    object-fit: contain;
+}
+.review-register-btn{
+	margin-top: 72px;
+}
+.cart-btn{
+	margin-top: 12px;
+}
+.product-detail-erea {
+    margin-bottom: 15px;
+}
+
+.count-select {
+    width: 150px;
+}
