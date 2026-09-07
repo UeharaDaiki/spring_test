@@ -1,20 +1,19 @@
 package jp.co.sss.cytech.form;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
 public class UserRegisterForm {
-	@NotNull
+	@NotBlank(message = "ユーザ名を入力してください")
 	private String userName;
-	@NotBlank
+	@NotBlank(message = "ユーザ名（カナ）を入力してください")
 	private String userNameKana;
-	@NotBlank
+	@NotBlank(message = "メールアドレスを入力してください")
 	private String email;
-	@NotBlank
+	@NotBlank(message = "電話番号を入力してください")
 	private String phone;
-	@NotBlank
+	@NotBlank(message = "住所を入力してください")
 	private String userAddress;
-	@NotBlank
+	@NotBlank(message = "パスワードを入力してください")
 	private String passwords;
 	
 	

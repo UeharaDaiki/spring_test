@@ -47,25 +47,33 @@
 					</div>
 				</div>
 				<div class="row">
+
 					<div class="col-6">
 						<div>
 							口コミ
-							<div>
-								<span>ユーザー名：</span>
-								<span th:text="${review.dummyUserName}"></span>
+							
+							<div th:if="${review != null}" class="my-2">
+								<div>
+									<span>ユーザー名：</span>
+									<span th:text="${review.dummyUserName}"></span>
+								</div>
+								<div>
+									<span>コメント：</span>
+									<span th:text="${review.comment}"></span>
+								</div>
+								<div>
+									<span>評価（５段階）：</span>
+									<span th:text="${review.rating}"></span>
+								</div>
 							</div>
-							<div>
-								<span>コメント：</span>
-								<span th:text="${review.comment}"></span>
+							<div th:if="${review == null}" class="my-2">
+								<p class="text-muted">まだ口コミはありません。</p>
 							</div>
-							<div>
-								<span>評価（５段階）：</span>
-								<span th:text="${review.rating}"></span>
-							</div>
-							<form th:action="@{/user/purchaseDetail}"><!-- セッション用 -->
+
+							<form th:action="@{/user/purchaseDetail}">
 								<input type="hidden" name="productName" th:value="${product.productName}">
 								<input type="hidden" name="price" th:value="${product.includeTax}">
-								<input type="hidden" name="quantity" value=1><!-- 単体購入のため固定 -->
+								<input type="hidden" name="quantity" value="1"><!-- 単体購入のため固定 -->
 								<input type="hidden" name="imagePath" th:value="${product.imgPath}">
 								<input type="submit" class="btn btn-primary px-3" value="単体購入">
 							</form>
@@ -73,14 +81,12 @@
 						</div>
 					</div>
 					<div class="col-6">
-						<div>
+						<div th:if="${review != null}">
 							<span>投稿日時：</span>
 							<span th:text="${#dates.format(review.createdAt, 'yyyy/MM/dd')}"></span>
 						</div>
 						<a th:href="@{/user/reviewRegister/{id}(id=${product.productId})}" class="btn btn-primary px-3 review-register-btn">口コミ投稿</a>
-					</div>
-					
-				</div>
+					</div>				</div>
 			</div>
 		
 			<div class="col-3 border" >

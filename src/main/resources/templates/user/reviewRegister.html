@@ -10,29 +10,38 @@
 	<header th:replace="~{header :: common_header}"></header>
 	<div class="container">
 		<h2 class="text-start">口コミ投稿画面</h2>
-		<form th:action="@{/user/reviewRegister}" method="post" enctype="multipart/form-data">
+		<form th:action="@{/user/reviewRegister}" th:object="${reviewRegisterForm}" method="post" enctype="multipart/form-data">
 			<div>
 				<div>ユーザー名（任意）</div>
-				<input name="userName" class="w-100 form-control" type="text" required>
+				<input name="userName" class="w-100 form-control" type="text" th:field="*{userName}">
+				<div th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}" class="text-danger small"></div>
 			</div>
 			<div>
 				<span>評価</span>
-				<select name="rating" class="d-inline-block w-25 mt-1 form-control">
-					<option>1</option>
+				<select name="rating" class="d-inline-block w-25 mt-1 form-control" th:field="*{rating}">
+					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+					<option value="5">5</option>
 				</select>
+				<div th:if="${#fields.hasErrors('rating')}" th:errors="*{rating}" class="text-danger small"></div>
 			</div>
 			<div>
 				<div>メールアドレス</div>
-				<input name="email" class="w-100 form-control" type="text" required>
+				<input name="email" class="w-100 form-control" type="text" th:field="*{email}">
+				<div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger small"></div>
 			</div>
 			<div>
 				<div>コメント</div>
-				<input name="comment" class="w-100 form-control" type="textarea" required>
+				<input name="comment" class="w-100 form-control" type="textarea" th:field="*{comment}">
+				<div th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}" class="text-danger small"></div>
 			</div>
-			<div class="mt-1">
-				<input name="reviewImgPath" class="form-control" type="file" required>
+			<div>
+				<input name="reviewImgPath" class="form-control" type="file">
+				<div th:if="${#fields.hasErrors('reviewImgPath')}" th:errors="*{reviewImgPath}" class="text-danger small"></div>
 			</div>
-			<input name="productId" th:value="${productId}" type="hidden">
+			<input name="productId" th:field="*{productId}" type="hidden">
 			<div class="text-center">
 				<input class="btn btn-primary px-3 review-register-btn mt-1" type="submit" value="投稿">
 			</div>

@@ -11,6 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,13 +34,24 @@ public class ReviewResisterController {
 	private ReviewsRepository reviewsRepository;
 	
 	@RequestMapping(path = "/user/reviewRegister/{productId}")
-	public String showReviewRegister(@PathVariable("productId") Integer productId, Model model) {
+	public String showReviewRegister(@PathVariable("productId") Integer productId,@ModelAttribute("reviewRegisterForm") ReviewRegisterForm form, Model model) {
 		model.addAttribute("productId", productId);
 	    return "user/reviewRegister";
 	}
 	
 	@RequestMapping(path = "/user/reviewRegister",method=RequestMethod.POST)
-	public String reviewRegister(@RequestParam("reviewImgPath") MultipartFile imageFile, ReviewRegisterForm form, Model model) throws IllegalStateException, IOException {
+	public String reviewRegister(@RequestParam("reviewImgPath") MultipartFile imageFile, @Validated ReviewRegisterForm form, BindingResult bindingResult, Model model) throws IllegalStateException, IOException {
+
+		if (form.getReviewImgPath() == null || form.getReviewImgPath().isEmpty()) {
+			bindingResult.rejectValue("reviewImgPath", "error.reviewImgPath", "画像ファイルを選択してください。");
+			return "user/reviewRegister";
+		}
+		if (bindingResult.hasErrors()) {
+			
+			return "user/reviewRegister";
+	    }
+	    
+		
 	    String email = SecurityContextHolder.getContext().getAuthentication().getName();
 	    Optional<User> loginUser= userRepository.findByEmail(email);
 		

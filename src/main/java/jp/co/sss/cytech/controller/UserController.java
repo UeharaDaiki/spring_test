@@ -2,6 +2,8 @@ package jp.co.sss.cytech.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -20,7 +22,11 @@ public class UserController {
 	}
 	
 	@RequestMapping(path="user/register", method = RequestMethod.POST)
-	public String regster(UserRegisterForm userRegisterForm) {
+	public String regster(@Validated UserRegisterForm userRegisterForm, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			
+			return "user/register";
+	    }
 		User user = new User();
 		user.setUserName(userRegisterForm.getUserName());
 		user.setUserNameKana(userRegisterForm.getUserNameKana());

@@ -1,5 +1,7 @@
 package jp.co.sss.cytech.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,8 +29,13 @@ public class ProductDetailController {
 		
 		Products product = productsRepository.findById(productId).get();
 		Companies company = companiesRepository.findById(product.getCompanyId()).get();
-		Reviews review = reviewsRepository.findTop1ByProductIdOrderByCreatedAtDesc(productId).get(0);
-
+		List<Reviews> reviewList = reviewsRepository.findTop1ByProductIdOrderByCreatedAtDesc(productId);
+		
+		Reviews review = null;
+		if (reviewList != null && !reviewList.isEmpty()) {
+			review = reviewList.get(0);
+		}
+		
 		model.addAttribute("product",product);
 		model.addAttribute("company",company);
 		model.addAttribute("review",review);
