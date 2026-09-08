@@ -35,7 +35,7 @@ public class ReviewResisterController {
 	
 	@RequestMapping(path = "/user/reviewRegister/{productId}")
 	public String showReviewRegister(@PathVariable("productId") Integer productId,@ModelAttribute("reviewRegisterForm") ReviewRegisterForm form, Model model) {
-		model.addAttribute("productId", productId);
+		form.setProductId(productId);
 	    return "user/reviewRegister";
 	}
 	
